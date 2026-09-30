@@ -1,9 +1,12 @@
-.env.local
-private_exports/
+tools/
+backup/
+output/
 exports/
-api-media/
+private_exports/
+*.exe
+*.zip
+*.jsonl
 *.chat.json
-*.chatlab.json
 *.wechat.json
 *.wechat.csv
 *.wechat.txt
