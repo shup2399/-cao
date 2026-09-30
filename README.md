@@ -1,44 +1,69 @@
 # WeChat → ChatGPT
 
-一个尽量简单的 Windows 小工具：从本机 WeFlow HTTP API 读取微信聊天记录，整理成适合直接上传给 ChatGPT 的 JSON / Markdown 文件。
+这个仓库现在改用 **WeChat EXP**，不再依赖 WeFlow。
 
-> 隐私：聊天记录只保存在你的电脑。本仓库不会自动上传聊天数据到 GitHub。
+上游项目：
+https://github.com/sunhanaix/pc_wechat_exp
 
-## 使用前准备
+当前固定版本：
+- v2.10.20260928
+- Windows x64 EXE
+- SHA-256: `000BC70437123D68C953D35D0F95DC0C12C2A5757686BD8F0F04717A9663BB6B`
 
-1. Windows 10/11 x64，微信 4.0+。
-2. 安装并运行 WeFlow。
-3. WeFlow → 设置 → API 服务 → 启动服务。
-4. 记下 WeFlow 的 Access Token（API 默认地址为 `http://127.0.0.1:5031`）。
-5. 双击 `setup.bat` 完成初始化。
-6. 双击 `一键导出微信聊天.bat`。
+## 你怎么用
 
-程序会：
-- 检查 WeFlow 是否在线；
-- 获取会话列表；
-- 让你选择联系人/群；
-- 自动分页拉取聊天；
-- 在本机 `private_exports/` 生成 JSON 和 Markdown；
-- 尝试打开输出文件夹。
+### 第一次
 
-然后把生成的 `*_chatgpt.md` 或 `*_chatgpt.json` 直接拖进 ChatGPT 即可分析。
+1. 确保 Windows 微信已经登录。
+2. 双击 `一键安装.bat`。
+3. 安装脚本会从上游 GitHub Release 下载官方 EXE，并校验 SHA-256。
+4. 双击 `微信聊天给GPT.bat`。
 
-## Token
+WeChat EXP 会在本机启动，网页地址是：
 
-首次运行会提示输入 Token，并只写入本机 `.env.local`。该文件已经被 gitignore。
+`http://127.0.0.1:5000`
 
-也可手工复制：
+第一次需要先做一次「一键备份」。
 
-```
-copy .env.example .env.local
-```
+### 以后
 
-然后编辑 `.env.local`。
+直接双击：
 
-## 数据安全
+`微信聊天给GPT.bat`
 
-`private_exports/`、`.env.local`、聊天 JSON/CSV/TXT/HTML、媒体缓存均被忽略。不要手工强制提交真实聊天记录。
+脚本会启动 WeChat EXP，并打开「聊天导出」页面。
 
-## WeFlow
+推荐导出格式：
 
-本项目不包含、不重新分发 WeFlow。请从 WeFlow 官方项目安装。API 仍处于早期阶段，未来接口变化时本工具可能需要同步更新。
+- 少量/普通聊天：TXT
+- 聊天很多、希望保留结构：ChatLab JSON
+- 超大聊天：ChatLab JSONL
+
+导出完后，把文件直接拖到 ChatGPT 里即可。
+
+## 隐私
+
+- 微信聊天和备份只保存在你自己的电脑。
+- 本仓库不会上传聊天记录到 GitHub。
+- `backup/`、`output/`、`exports/`、下载的 EXE 等都被 `.gitignore` 排除。
+- 请只处理你有权访问和分析的聊天数据。
+
+## 为什么换掉 WeFlow
+
+WeChat EXP 当前提供可直接下载的 Windows EXE，并且原生支持：
+
+- WeChat 4.x
+- Windows 10/11
+- 一键备份
+- 聊天查看
+- TXT / HTML / ChatLab JSON / JSONL 导出
+- 本地 Web UI
+- CLI 导出
+- 图片、语音等媒体处理
+
+所以它更适合当前“微信聊天 → 导出文件 → 给 ChatGPT 分析”的目标。
+
+## 上游版本说明
+
+本仓库只负责简化启动流程，不修改 WeChat EXP 本体。
+如果上游更新微信兼容性，后续可以再升级这里固定的版本。
